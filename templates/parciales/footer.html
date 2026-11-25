@@ -1,0 +1,30 @@
+{% load static %}
+<footer class="pie">
+  <div class="contenedor pie-rejilla">
+    <div class="pie-logos">
+      <img src="{% static 'img/icon-uncp.png' %}" alt="Lorem ipsum dolor" width="48" height="48" />
+      <img src="{% static 'img/icon-fis.png' %}" alt="Lorem ipsum dolor" width="48" height="48" />
+    </div>
+    <div class="pie-texto">
+      <p class="pie-titulo">Universidad Nacional del Centro del Perú</p>
+      <p>Facultad de Ingeniería de Sistemas</p>
+      <p>Desarrollo de Aplicaciones Web</p>
+      <p>Gago Uribe Edgar Robert</p>
+      <p class="pie-nota">
+        Los límites por tipo de zona son referenciales y se basan en el reglamento de estándares de
+        calidad ambiental para ruido (D.S. 085-2003-PCM).
+      </p>
+    </div>
+    <ul class="pie-enlaces">
+      <li>
+        <a href="{% url 'docs' %}"><i data-lucide="book-open"></i>Documentación de la API</a>
+      </li>
+      <li>
+        <a href="{% url 'schema' %}"><i data-lucide="file-json"></i>Esquema OpenAPI</a>
+      </li>
+      <li>
+        <a href="/api/"><i data-lucide="braces"></i>Raíz de la API</a>
+      </li>
+    </ul>
+  </div>
+</footer>
