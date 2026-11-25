@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titulo %}Panorama sonoro{% endblock %}
+{% block contenido %}
+<section class="hero contenedor">
+  <div class="hero-texto">
+    <p class="etiqueta"><i data-lucide="map-pin"></i>Provincia de Huancayo, Junín</p>
+    <h1 class="titulo-display">Huancayo suena fuerte. <em>Midámoslo</em> entre todos.</h1>
+    <p class="lead">ContaminaSound reúne las mediciones de decibeles que reportan vecinos de los 28 distritos de la provincia, por zona y por hora del día, para saber dónde el ruido ya pasó el límite.</p>
+    <div class="acciones">
+      <a class="boton boton-primario" href="{% url 'reportar' %}"><i data-lucide="mic"></i>Reportar una medición</a>
+      <a class="boton boton-fantasma" href="{% url 'mediciones' %}">Explorar mediciones<i data-lucide="arrow-right"></i></a>
+    </div>
+    <dl class="cifras">
+      <div><dt>Mediciones</dt><dd data-cifra="total">—</dd></div>
+      <div><dt>Pendientes de revisión</dt><dd data-cifra="pendientes">—</dd></div>
+      <div><dt>Superan el límite</dt><dd data-cifra="porcentaje">—</dd></div>
+    </dl>
+  </div>
+
+  <aside class="regla" aria-label="Escala de decibeles">
+    <header class="regla-cabeza">
+      <h2>Regla sonora</h2>
+      <p>El promedio de la provincia frente a sonidos de todos los días.</p>
+    </header>
+    <div class="regla-cuerpo">
+      <ol class="regla-col regla-hitos">
+        <li style="--pos:100%"><span>Cohetón</span><b>120</b></li>
+        <li style="--pos:77.8%"><span>Banda en fiesta patronal</span><b>100</b></li>
+        <li style="--pos:61.1%"><span>Claxon de combi</span><b>85</b></li>
+        <li style="--pos:44.4%"><span>Avenida concurrida</span><b>70</b></li>
+        <li style="--pos:33.3%"><span>Conversación</span><b>60</b></li>
+        <li style="--pos:11.1%"><span>Biblioteca</span><b>40</b></li>
+        <li style="--pos:0%"><span>Susurro</span><b>30</b></li>
+      </ol>
+      <div class="regla-barra" aria-hidden="true">
+        <span class="nivel-bajo" style="flex-grow:25"></span>
+        <span class="nivel-medio" style="flex-grow:15"></span>
+        <span class="nivel-alto" style="flex-grow:15"></span>
+        <span class="nivel-critico" style="flex-grow:35"></span>
+      </div>
+      <div class="regla-col">
+        <div class="regla-marcador" id="regla-marcador" style="--pos:0%">
+          <strong id="regla-valor">--</strong><small>dB</small>
+        </div>
+      </div>
+    </div>
+  </aside>
+</section>
+
+<section class="seccion contenedor">
+  <header class="seccion-cabeza">
+    <p class="etiqueta">Cómo funciona</p>
+    <h2 class="titulo-seccion">Del celular del vecino al mapa del distrito</h2>
+  </header>
+  <ol class="pasos">
+    <li class="paso">
+      <span class="paso-indice">01</span>
+      <span class="paso-icono"><i data-lucide="smartphone"></i></span>
+      <h3>Mide donde vives</h3>
+      <p>Con cualquier medidor de sonido en el teléfono, registra el valor sostenido durante 30 segundos frente a tu casa, tu mercado o tu hospital.</p>
+    </li>
+    <li class="paso">
+      <span class="paso-indice">02</span>
+      <span class="paso-icono"><i data-lucide="send"></i></span>
+      <h3>Reporta en un minuto</h3>
+      <p>Elige la zona, indica los decibeles y la fuente del ruido. Tu reporte entra como pendiente mientras el personal lo revisa.</p>
+    </li>
+    <li class="paso">
+      <span class="paso-indice">03</span>
+      <span class="paso-icono"><i data-lucide="gavel"></i></span>
+      <h3>Se valida y se actúa</h3>
+      <p>Las mediciones validadas que superan el límite de la zona pueden derivar en una multa emitida por el personal autorizado.</p>
+    </li>
+  </ol>
+</section>
+
+<section class="seccion contenedor">
+  <header class="seccion-cabeza">
+    <p class="etiqueta">Tres tipos de zona</p>
+    <h2 class="titulo-seccion">No todo lugar tolera el mismo ruido</h2>
+  </header>
+  <div class="mosaico">
+    <a class="tile tile-grande" href="{% url 'zonas' %}?tipo_uso=hospital">
+      <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200&q=80" alt="Lorem ipsum dolor" loading="lazy">
+      <div class="tile-panel">
+        <span class="chip"><i data-lucide="hospital"></i>Hospital</span>
+        <h3>Zonas de protección especial</h3>
+        <p>Pacientes y personal necesitan silencio. Límite referencial de <strong class="mono">50 dB</strong>.</p>
+      </div>
+    </a>
+    <a class="tile" href="{% url 'zonas' %}?tipo_uso=residencial">
+      <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=900&q=80" alt="Lorem ipsum dolor" loading="lazy">
+      <div class="tile-panel">
+        <span class="chip"><i data-lucide="house"></i>Residencial</span>
+        <h3>Barrios y urbanizaciones</h3>
+        <p>Límite referencial de <strong class="mono">60 dB</strong>.</p>
+      </div>
+    </a>
+    <a class="tile" href="{% url 'zonas' %}?tipo_uso=comercial">
+      <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=900&q=80" alt="Lorem ipsum dolor" loading="lazy">
+      <div class="tile-panel">
+        <span class="chip"><i data-lucide="store"></i>Comercial</span>
+        <h3>Mercados, ferias y avenidas</h3>
+        <p>Límite referencial de <strong class="mono">70 dB</strong>.</p>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section class="seccion contenedor">
+  <div class="dos-columnas">
+    <div>
+      <header class="seccion-cabeza">
+        <p class="etiqueta">El día en decibeles</p>
+        <h2 class="titulo-seccion">¿A qué hora pesa más el ruido?</h2>
+      </header>
+      <div class="franjas" id="franjas" aria-live="polite">
+        <div class="esqueleto" style="height:220px"></div>
+      </div>
+      <h3 class="subtitulo">Fuentes más reportadas</h3>
+      <ul class="hbarras" id="fuentes">
+        <li class="esqueleto" style="height:40px"></li>
+      </ul>
+    </div>
+    <div>
+      <header class="seccion-cabeza">
+        <p class="etiqueta">Ranking</p>
+        <h2 class="titulo-seccion">Las zonas más ruidosas</h2>
+      </header>
+      <ol class="ranking" id="top-zonas">
+        <li class="esqueleto" style="height:64px"></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="seccion contenedor">
+  <header class="seccion-cabeza seccion-cabeza-fila">
+    <div>
+      <p class="etiqueta">Última hora</p>
+      <h2 class="titulo-seccion">Reportes recientes</h2>
+    </div>
+    <a class="boton boton-contorno" href="{% url 'mediciones' %}">Ver todas<i data-lucide="arrow-right"></i></a>
+  </header>
+  <ul class="recientes" id="ultimos">
+    <li class="esqueleto" style="height:64px"></li>
+  </ul>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/inicio.js' %}" defer></script>
+{% endblock %}
