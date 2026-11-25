@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titulo %}Zonas urbanas{% endblock %}
+{% block contenido %}
+<section class="contenedor cabecera-pagina">
+  <p class="etiqueta"><i data-lucide="map-pinned"></i>Catálogo</p>
+  <h1 class="titulo-pagina">Zonas <em>urbanas</em></h1>
+  <p class="lead">Cada zona tiene un tipo de uso y un límite de decibeles. Filtra por distrito o por tipo y consulta el promedio de ruido por franja horaria.</p>
+</section>
+
+<section class="contenedor">
+  <form class="filtros" id="filtros-zonas" autocomplete="off">
+    <label class="filtro filtro-ancho">
+      <span>Buscar</span>
+      <input class="campo" type="search" name="search" placeholder="Nombre de zona o distrito">
+    </label>
+    <label class="filtro">
+      <span>Distrito</span>
+      <select class="campo" name="distrito">
+        <option value="">Todos</option>
+        {% for d in distritos %}<option value="{{ d }}">{{ d }}</option>{% endfor %}
+      </select>
+    </label>
+    <label class="filtro">
+      <span>Tipo de uso</span>
+      <select class="campo" name="tipo_uso">
+        <option value="">Todos</option>
+        {% for valor, etiqueta in tipos_uso %}<option value="{{ valor }}">{{ etiqueta }}</option>{% endfor %}
+      </select>
+    </label>
+    <label class="filtro">
+      <span>Ordenar por</span>
+      <select class="campo" name="ordering">
+        <option value="">Distrito y nombre</option>
+        <option value="nombre">Nombre (A-Z)</option>
+        <option value="-limite_db">Límite más alto</option>
+        <option value="limite_db">Límite más bajo</option>
+        <option value="-total_mediciones">Más mediciones</option>
+      </select>
+    </label>
+    <button class="boton boton-contorno filtro-limpiar" type="button" id="limpiar">
+      <i data-lucide="rotate-ccw"></i>Limpiar
+    </button>
+  </form>
+  <p class="conteo" id="zonas-total" aria-live="polite"></p>
+  <div class="rejilla-zonas" id="zonas-grid"></div>
+  <nav class="paginacion" id="paginacion" aria-label="Paginación"></nav>
+</section>
+
+<dialog class="dialogo" id="dialogo-zona" aria-labelledby="dialogo-titulo">
+  <header class="dialogo-cabeza">
+    <div>
+      <h2 class="dialogo-titulo" id="dialogo-titulo">Zona</h2>
+      <p class="celda-sub" id="dialogo-sub"></p>
+    </div>
+    <button class="boton boton-fantasma boton-icono" type="button" data-cerrar aria-label="Cerrar">
+      <i data-lucide="x"></i>
+    </button>
+  </header>
+  <div class="dialogo-cuerpo" id="dialogo-cuerpo"></div>
+</dialog>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/zonas.js' %}" defer></script>
+{% endblock %}
