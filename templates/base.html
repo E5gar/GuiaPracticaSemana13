@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block titulo %}Panorama sonoro{% endblock %} | ContaminaSound</title>
+  <meta name="description" content="Mapa ciudadano de contaminación sonora en los distritos de la provincia de Huancayo.">
+  <link rel="icon" href="{% static 'img/icon-uncp.png' %}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+  <script>
+    (function () {
+      try {
+        var tema = localStorage.getItem('tema');
+        if (!tema) {
+          tema = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        }
+        document.documentElement.dataset.theme = tema;
+      } catch (e) {}
+    })();
+  </script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
+</head>
+<body data-pagina="{{ pagina }}" data-personal="{{ es_personal|yesno:'true,false' }}">
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  {% include 'parciales/navbar.html' %}
+  <div class="marco">
+    <main id="contenido">
+      {% block contenido %}{% endblock %}
+    </main>
+    {% include 'parciales/footer.html' %}
+  </div>
+  <div class="avisos" id="avisos" aria-live="polite"></div>
+  <script src="{% static 'js/base.js' %}" defer></script>
+  <script src="{% static 'js/api.js' %}" defer></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>
