@@ -1,0 +1,8 @@
+openapi: 3.0.3
+info:
+  title: ContaminaSound API
+  version: 1.0.0
+  description: API REST para reportar y consultar niveles de contaminación sonora
+    en los distritos de la provincia de Huancayo.
+paths: {}
+components: {}
