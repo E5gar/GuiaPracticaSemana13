@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titulo %}Mediciones{% endblock %}
+{% block contenido %}
+<section class="contenedor cabecera-pagina">
+  <p class="etiqueta"><i data-lucide="table-2"></i>Registro ciudadano</p>
+  <h1 class="titulo-pagina">Todas las <em>mediciones</em></h1>
+  <p class="lead">Filtra por estado de revisión, fuente, distrito o fecha. La tabla se pagina desde el servidor y el filtro queda guardado en la dirección de la página.</p>
+</section>
+
+<section class="contenedor">
+  <form class="filtros filtros-densos" id="filtros-mediciones" autocomplete="off">
+    <input type="hidden" name="zona">
+    <label class="filtro">
+      <span>Estado de revisión</span>
+      <select class="campo" name="estado_revision">
+        <option value="">Todos</option>
+        {% for valor, etiqueta in estados %}<option value="{{ valor }}">{{ etiqueta }}</option>{% endfor %}
+      </select>
+    </label>
+    <label class="filtro">
+      <span>Fuente</span>
+      <select class="campo" name="fuente">
+        <option value="">Todas</option>
+        {% for f in fuentes %}<option value="{{ f.valor }}">{{ f.etiqueta }}</option>{% endfor %}
+      </select>
+    </label>
+    <label class="filtro">
+      <span>Distrito</span>
+      <select class="campo" name="distrito">
+        <option value="">Todos</option>
+        {% for d in distritos %}<option value="{{ d }}">{{ d }}</option>{% endfor %}
+      </select>
+    </label>
+    <label class="filtro">
+      <span>Tipo de zona</span>
+      <select class="campo" name="tipo_uso">
+        <option value="">Todos</option>
+        {% for valor, etiqueta in tipos_uso %}<option value="{{ valor }}">{{ etiqueta }}</option>{% endfor %}
+      </select>
+    </label>
+    <label class="filtro">
+      <span>Límite de la zona</span>
+      <select class="campo" name="excede_limite">
+        <option value="">Todas</option>
+        <option value="true">Superan el límite</option>
+        <option value="false">Dentro del límite</option>
+      </select>
+    </label>
+    <label class="filtro">
+      <span>Desde</span>
+      <input class="campo" type="date" name="desde">
+    </label>
+    <label class="filtro">
+      <span>Hasta</span>
+      <input class="campo" type="date" name="hasta">
+    </label>
+    <label class="filtro">
+      <span>Ordenar por</span>
+      <select class="campo" name="ordering">
+        <option value="-registrado_en">Más recientes</option>
+        <option value="registrado_en">Más antiguas</option>
+        <option value="-decibeles">Más ruidosas</option>
+        <option value="decibeles">Menos ruidosas</option>
+      </select>
+    </label>
+    <button class="boton boton-contorno filtro-limpiar" type="button" id="limpiar">
+      <i data-lucide="rotate-ccw"></i>Limpiar
+    </button>
+  </form>
+
+  <p class="conteo" id="mediciones-total" aria-live="polite"></p>
+
+  <div class="tabla-envoltura">
+    <table class="tabla">
+      <thead id="tabla-cabeza"></thead>
+      <tbody id="tabla-cuerpo"></tbody>
+    </table>
+  </div>
+  <nav class="paginacion" id="paginacion" aria-label="Paginación"></nav>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/mediciones.js' %}" defer></script>
+{% endblock %}
