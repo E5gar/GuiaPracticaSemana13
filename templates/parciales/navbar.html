@@ -1,0 +1,50 @@
+{% load static %}
+<nav class="dock" aria-label="Navegación principal">
+  <a class="dock-marca" href="{% url 'inicio' %}" aria-label="ContaminaSound">
+    <img src="{% static 'img/icon-uncp.png' %}" alt="Lorem ipsum dolor" width="32" height="32">
+  </a>
+  <ul class="dock-lista">
+    <li>
+      <a class="dock-enlace" href="{% url 'inicio' %}"{% if pagina == 'inicio' %} aria-current="page"{% endif %}>
+        <i data-lucide="audio-lines"></i>
+        <span class="dock-texto">Panorama</span>
+      </a>
+    </li>
+    <li>
+      <a class="dock-enlace" href="{% url 'zonas' %}"{% if pagina == 'zonas' %} aria-current="page"{% endif %}>
+        <i data-lucide="map-pinned"></i>
+        <span class="dock-texto">Zonas</span>
+      </a>
+    </li>
+    <li>
+      <a class="dock-enlace" href="{% url 'mediciones' %}"{% if pagina == 'mediciones' %} aria-current="page"{% endif %}>
+        <i data-lucide="table-2"></i>
+        <span class="dock-texto">Mediciones</span>
+      </a>
+    </li>
+    <li>
+      <a class="dock-enlace" href="{% url 'reportar' %}"{% if pagina == 'reportar' %} aria-current="page"{% endif %}>
+        <i data-lucide="circle-plus"></i>
+        <span class="dock-texto">Reportar</span>
+      </a>
+    </li>
+  </ul>
+  <div class="dock-pie">
+    <button class="dock-enlace" type="button" data-tema-alternar aria-label="Cambiar tema">
+      <i data-lucide="sun" class="icono-sol"></i>
+      <i data-lucide="moon" class="icono-luna"></i>
+      <span class="dock-texto">Tema</span>
+    </button>
+    {% if es_personal %}
+    <a class="dock-enlace" href="{% url 'admin:index' %}">
+      <i data-lucide="shield-check"></i>
+      <span class="dock-texto">Panel</span>
+    </a>
+    {% else %}
+    <a class="dock-enlace" href="{% url 'rest_framework:login' %}?next={{ request.path }}">
+      <i data-lucide="log-in"></i>
+      <span class="dock-texto">Acceso</span>
+    </a>
+    {% endif %}
+  </div>
+</nav>
