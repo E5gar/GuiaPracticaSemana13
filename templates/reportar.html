@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titulo %}Reportar medición{% endblock %}
+{% block contenido %}
+<section class="contenedor cabecera-pagina">
+  <p class="etiqueta"><i data-lucide="mic"></i>Nuevo reporte</p>
+  <h1 class="titulo-pagina">Cuéntanos <em>cuánto</em> suena tu calle</h1>
+  <p class="lead">No necesitas cuenta. Tu medición entra como pendiente y el personal autorizado la valida antes de que cuente en los promedios.</p>
+</section>
+
+<section class="contenedor reporte">
+  <form class="tarjeta formulario" id="form-reporte" novalidate>
+    <div class="error-general" id="error-general" role="alert" hidden></div>
+
+    <label class="grupo">
+      <span class="grupo-titulo">Zona</span>
+      <select class="campo" name="zona" required>
+        <option value="">Cargando zonas</option>
+      </select>
+      <span class="error-campo" data-error="zona"></span>
+    </label>
+
+    <div class="grupo">
+      <label class="grupo-titulo" for="decibeles">Nivel medido</label>
+      <div class="medidor">
+        <input class="campo campo-db" type="number" id="decibeles" name="decibeles" min="20" max="140" step="0.1" value="60" required>
+        <span class="medidor-unidad">dB</span>
+        <input class="rango" type="range" id="rango-db" min="20" max="140" step="0.5" value="60" aria-label="Nivel en decibeles">
+      </div>
+      <p class="lectura" id="lectura-db"></p>
+      <p class="comparativa" id="comparativa"></p>
+      <span class="error-campo" data-error="decibeles"></span>
+    </div>
+
+    <fieldset class="grupo">
+      <legend class="grupo-titulo">Fuente del ruido</legend>
+      <div class="opciones">
+        {% for f in fuentes %}
+        <label class="opcion">
+          <input type="radio" name="fuente" value="{{ f.valor }}"{% if forloop.first %} checked{% endif %}>
+          <span><i data-lucide="{{ f.icono }}"></i>{{ f.etiqueta }}</span>
+        </label>
+        {% endfor %}
+      </div>
+      <span class="error-campo" data-error="fuente"></span>
+    </fieldset>
+
+    <button class="boton boton-primario boton-ancho" type="submit" id="enviar">
+      <i data-lucide="send"></i>Enviar reporte
+    </button>
+  </form>
+
+  <aside class="guia">
+    <div class="medio">
+      <img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=1200&q=80" alt="Lorem ipsum dolor" loading="lazy">
+    </div>
+    <h2 class="guia-titulo">Para que tu medición sirva</h2>
+    <ol class="guia-lista">
+      <li><span class="mono">01</span><p>Sostén el teléfono a la altura del pecho, lejos de paredes y del viento directo sobre el micrófono.</p></li>
+      <li><span class="mono">02</span><p>Mide durante 30 segundos y anota el valor que más se repite, no el pico aislado.</p></li>
+      <li><span class="mono">03</span><p>Reporta una vez por fuente de ruido. Los registros idénticos en menos de 2 minutos se rechazan.</p></li>
+    </ol>
+    <div class="resultado" id="resultado" hidden></div>
+  </aside>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/reportar.js' %}" defer></script>
+{% endblock %}
